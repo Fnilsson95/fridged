@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Node
+node_modules/
+frontend/dist/
+
+# Local data and secrets
+*.db
+*.db-wal
+*.db-shm
+.env
+config/*.toml
+!config/*.example.toml
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
