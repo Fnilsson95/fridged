@@ -1,8 +1,26 @@
+import { Route, Routes } from "react-router-dom";
+import BottomNav from "@/components/BottomNav";
+import DashboardPage from "@/features/dashboard/DashboardPage";
+import InventoryPage from "@/features/inventory/InventoryPage";
+import NeedsPricePage from "@/features/needs-price/NeedsPricePage";
+import ShoppingPage from "@/features/shopping/ShoppingPage";
+import HistoryPage from "@/features/history/HistoryPage";
+import ProductPage from "@/features/products/ProductPage";
+
 export default function App() {
   return (
-    <main className="min-h-screen bg-green-50 p-6 text-gray-900">
-      <h1 className="text-3xl font-bold">fridged</h1>
-      <p className="mt-2 text-gray-600">Dashboard kommer här.</p>
-    </main>
+    <>
+      <main className="mx-auto max-w-md p-4 pb-24">
+        <Routes>
+          <Route path="/" element={<DashboardPage />} />
+          <Route path="/inventory" element={<InventoryPage />} />
+          <Route path="/needs-price" element={<NeedsPricePage />} />
+          <Route path="/shopping" element={<ShoppingPage />} />
+          <Route path="/history" element={<HistoryPage />} />
+          <Route path="/products/:id" element={<ProductPage />} />
+        </Routes>
+      </main>
+      <BottomNav />
+    </>
   );
 }
