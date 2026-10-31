@@ -1,0 +1,11 @@
+<svg width="142" height="40" viewBox="0 0 142 40" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title id="title">fridged</title>
+  <g transform="rotate(-8 20 20)">
+    <circle cx="20" cy="20" r="16" fill="#1E3D2B"/>
+    <g stroke="#D9EE74" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13.625 15.042V24.958M16.458 15.042V24.958M19.292 15.042V24.958M22.125 15.042V24.958M24.958 15.042V24.958M26.375 15.042V24.958" stroke-width="1.275"/>
+      <path d="M17.167 15.042V24.958M23.542 15.042V24.958" stroke-width="0.708"/>
+    </g>
+  </g>
+  <text x="46" y="27" fill="#17251C" font-family="'DM Sans', Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="-1">fridged</text>
+</svg>
