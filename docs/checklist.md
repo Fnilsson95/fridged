@@ -8,9 +8,9 @@ Commit style: `feat:`, `fix:`, `test:`, `docs:`, `chore:`. No AI references or c
 
 ## 0. Docs
 
-- [ ] Move `data-model.md` and `pages.md` into `docs/`
-- [ ] Rewrite `docs/README.md` as an index of the docs
-- [ ] Add `.gitignore` entries: `.venv/`, `node_modules/`, `__pycache__/`, `*.db`, `*.db-wal`, `*.db-shm`, `.env`
+- [x] Move `data-model.md` and `pages.md` into `docs/`
+- [x] Rewrite `docs/README.md` as an index of the docs
+- [x] Add `.gitignore` entries: `.venv/`, `node_modules/`, `__pycache__/`, `*.db`, `*.db-wal`, `*.db-shm`, `.env`
 - [ ] Commit: `docs: add v1 data model and pages`
 
 **Done when:** `git status` is clean and the docs are on GitHub.

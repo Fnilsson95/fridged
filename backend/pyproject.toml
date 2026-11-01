@@ -1,0 +1,41 @@
+# How the package is built. setuptools is the standard, no-surprises choice.
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fridged-backend"
+version = "0.1.0"
+# Check `python3 --version` on the Pi before raising this
+requires-python = ">=3.11"
+
+# Needed to run the app. The Pi installs these too.
+dependencies = [
+    "fastapi",            # the web framework
+    "uvicorn",            # the server that runs FastAPI
+    "sqlalchemy>=2.0",    # ORM (Object-Relational Mapping): tables as Python classes (classes = tables, properties = columns, objects = rows)
+    "alembic",            # database migrations
+    "pydantic-settings",  # reads settings from environment variables
+]
+
+# Only needed while developing. Install with: pip install -e ".[dev]"
+[project.optional-dependencies]
+dev = [
+    "pytest",  # test runner
+    "httpx",   # required by FastAPI's TestClient
+    "ruff",    # linter and formatter
+]
+
+# Tell setuptools which folder is the package (so `import app` works everywhere)
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]  # where pytest looks for tests
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+# E/F: errors and unused code, I: import order, UP: modern Python, B: likely bugs
+select = ["E", "F", "I", "UP", "B"]
