@@ -12,7 +12,7 @@ def make_engine(url: str) -> Engine:
 
     # FastAPI runs normal (non-async) endpoitns in a thread pool
     # so SQLite must be allowed to hand a connection between threads.
-    engine = create_engine(url, connect_args={"check_same_threat": False} if is_sqlite else {})
+    engine = create_engine(url, connect_args={"check_same_thread": False} if is_sqlite else {})
 
     if is_sqlite:
 
