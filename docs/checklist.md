@@ -11,7 +11,7 @@ Commit style: `feat:`, `fix:`, `test:`, `docs:`, `chore:`. No AI references or c
 - [x] Move `data-model.md` and `pages.md` into `docs/`
 - [x] Rewrite `docs/README.md` as an index of the docs
 - [x] Add `.gitignore` entries: `.venv/`, `node_modules/`, `__pycache__/`, `*.db`, `*.db-wal`, `*.db-shm`, `.env`
-- [ ] Commit: `docs: add v1 data model and pages`
+- [x] Commit: `docs: add v1 data model and pages`
 
 **Done when:** `git status` is clean and the docs are on GitHub.
 
@@ -19,21 +19,21 @@ Commit style: `feat:`, `fix:`, `test:`, `docs:`, `chore:`. No AI references or c
 
 ## 1. Backend skeleton
 
-- [ ] Check `python3 --version` on your Mac and plan for the version the Pi will have (check it later with `python3 --version` on the Pi)
-- [ ] Create `backend/` with `pyproject.toml`, `app/`, `tests/`
-- [ ] Create the virtual env: `python3 -m venv .venv` and `source .venv/bin/activate`
-- [ ] Install runtime deps: `fastapi`, `uvicorn`, `sqlalchemy`, `alembic`, `pydantic-settings`
-- [ ] Install dev deps: `pytest`, `httpx` (needed by FastAPI's test client), `ruff`
-- [ ] `app/main.py`: FastAPI app, `GET /api/health` returning `{"status": "ok"}`
-- [ ] `app/config.py`: settings from env vars (database path, timezone `Europe/Stockholm`)
-- [ ] `app/db.py`: engine and session factory. On every connection set `PRAGMA journal_mode=WAL`, `PRAGMA foreign_keys=ON`, `PRAGMA busy_timeout=5000`
-- [ ] `app/models.py`: `Product` and `Event`, with the CHECK constraints from `data-model.md`
-- [ ] Give all constraints names via a `MetaData(naming_convention=...)`, so Alembic can change them later
-- [ ] Initialise Alembic, point `env.py` at your models' metadata, enable `render_as_batch=True` (SQLite)
-- [ ] Generate the first migration, **read it**, apply it: `alembic upgrade head`
-- [ ] `tests/conftest.py`: fixture that gives each test a fresh database and overrides the FastAPI session dependency
-- [ ] First test: `/api/health` returns 200
-- [ ] Configure ruff in `pyproject.toml`, then `ruff check .` and `ruff format .` pass
+- [x] Check `python3 --version` on your Mac and plan for the version the Pi will have (check it later with `python3 --version` on the Pi)
+- [x] Create `backend/` with `pyproject.toml`, `app/`, `tests/`
+- [x] Create the virtual env: `python3 -m venv .venv` and `source .venv/bin/activate`
+- [x] Install runtime deps: `fastapi`, `uvicorn`, `sqlalchemy`, `alembic`, `pydantic-settings`
+- [x] Install dev deps: `pytest`, `httpx` (needed by FastAPI's test client), `ruff`
+- [x] `app/main.py`: FastAPI app, `GET /api/health` returning `{"status": "ok"}`
+- [x] `app/config.py`: settings from env vars (database path, timezone `Europe/Stockholm`)
+- [x] `app/db.py`: engine and session factory. On every connection set `PRAGMA journal_mode=WAL`, `PRAGMA foreign_keys=ON`, `PRAGMA busy_timeout=5000`
+- [x] `app/models.py`: `Product` and `Event`, with the CHECK constraints from `data-model.md`
+- [x] Give all constraints names via a `MetaData(naming_convention=...)`, so Alembic can change them later
+- [x] Initialise Alembic, point `env.py` at your models' metadata, enable `render_as_batch=True` (SQLite)
+- [x] Generate the first migration, **read it**, apply it: `alembic upgrade head`
+- [x] `tests/conftest.py`: fixture that gives each test a fresh database and overrides the FastAPI session dependency
+- [x] First test: `/api/health` returns 200
+- [x] Configure ruff in `pyproject.toml`, then `ruff check .` and `ruff format .` pass
 
 **Done when:** `uvicorn app.main:app --reload` starts, `http://localhost:8000/docs` loads, `pytest` is green, `alembic upgrade head` creates both tables.
 
