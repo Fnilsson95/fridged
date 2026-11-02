@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session, sessionmaker
 
 from app.config import settings
 
+
 def make_engine(url: str) -> Engine:
     """Create a database engine. Tests call this with their own temporary database"""
 
@@ -21,9 +22,9 @@ def make_engine(url: str) -> Engine:
 
             # Runs on every new connection. Settings are per connection
             cursor = dbapi_connection.cursor()
-            cursor.execute("PRAGMA journal_mode=WAL") # readers don't block the writer
-            cursor.execute("PRAGMA foreign_keys=ON") # SQLite ignores foreign keys by default
-            cursor.execute("PRAGMA busy_timeout=5000") # wait up to 5 seconds when locked (5000ms)
+            cursor.execute("PRAGMA journal_mode=WAL")  # readers don't block the writer
+            cursor.execute("PRAGMA foreign_keys=ON")  # SQLite ignores foreign keys by default
+            cursor.execute("PRAGMA busy_timeout=5000")  # wait up to 5 seconds when locked (5000ms)
             cursor.close()
 
     return engine

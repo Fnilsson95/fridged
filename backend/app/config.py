@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+
 class Settings(BaseSettings):
     """App settings. Eeach field can be overriden by an environment variable
     with the FIRDGED_ prefix, or by a line in a local .env file.
@@ -15,6 +16,7 @@ class Settings(BaseSettings):
     # Used to decide which week or month an event belongs to
     # Everything is stored in UTC. This is only for reporting periods.
     timezone: str = "Europe/Stockholm"
+
 
 # One shared instance that the rest of the app imports
 settings = Settings()

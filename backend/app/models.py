@@ -14,10 +14,12 @@ NAMING_CONVENTION = {
     "pk": "pk_%(table_name)s",
 }
 
+
 class Base(DeclarativeBase):
     """Parent class of all tables. Alembic reads Base.metadata to see the schema"""
 
     metadata = MetaData(naming_convention=NAMING_CONVENTION)
+
 
 def utc_now_iso() -> str:
     """Current time as a UTC ISO-8601 string --> 2026-11-01T17:04:00.12+00:00.
@@ -25,6 +27,7 @@ def utc_now_iso() -> str:
     """
 
     return datetime.now(UTC).isoformat(timespec="milliseconds")
+
 
 class Product(Base):
     """One row per barcode: what an item is.
@@ -55,13 +58,14 @@ class Product(Base):
     # `X | None`means the column is nullable. These are NULL while unknown
     name: Mapped[str | None]
     brand: Mapped[str | None]
-    size_label: Mapped[str | None] # Example: 500g - 1l
+    size_label: Mapped[str | None]  # Example: 500g - 1l
     image_url: Mapped[str | None]
     # Money is always integer öre (1250 = 12,50kr) The UI converts to SEK
     current_price_ore: Mapped[int | None]
 
     created_at: Mapped[str] = mapped_column(default=utc_now_iso)
     updated_at: Mapped[str] = mapped_column(default=utc_now_iso, onupdate=utc_now_iso)
+
 
 class Event(Base):
     """A log of every recorded scan. Append-only: rows are never edited or deleted
@@ -71,25 +75,20 @@ class Event(Base):
     __tablename__ = "events"
     __table_args__ = (
         CheckConstraint("type IN ('in', 'out', 'stocktake')", name="type_valid"),
-        CheckConstraint(
-            "unit_price_ore IS NULL OR unit_price_ore >= 0", name="price_non_negative"
-        ),
+        CheckConstraint("unit_price_ore IS NULL OR unit_price_ore >= 0", name="price_non_negative"),
         # Indexes for the queries we will run most (stock per product, totals per period).
         Index("ix_events_product_time", "product_id", "occurred_at"),
         Index("ix_events_type_time", "type", "occurred_at"),
     )
 
-
     id: Mapped[int] = mapped_column(primary_key=True)
     # UUID made by the devide. A repeated scan with the same id is a duplicate
     client_event_id: Mapped[str] = mapped_column(unique=True)
     product_id: Mapped[int] = mapped_column(ForeignKey("products.id"))
-    type: Mapped[str] # "in", "out, "stocktake"
+    type: Mapped[str]  # "in", "out, "stocktake"
     # Price at the time of scanning, so old totals never change when a price changes
     # NULL while the product is unknown. Filled in when product is handled manually
     unit_price_ore: Mapped[int | None]
     occurred_at: Mapped[str]  # when it was scanned (device clock, UTC)
     received_at: Mapped[str] = mapped_column(default=utc_now_iso)  # when the backend got it
     reverted_at: Mapped[str | None]  # set by undo. NULL = the event counts
-
-    
