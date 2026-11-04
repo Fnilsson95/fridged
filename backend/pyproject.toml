@@ -1,3 +1,7 @@
+# Decribes the fridged backend package (name, python version and depencdencies, etc)
+# and hold the settings for tools (pytest, ruff)
+# Install only with .venv or the packages end up in the global python and they will be missing
+
 # How the package is built. setuptools is the standard, no-surprises choice.
 [build-system]
 requires = ["setuptools>=68"]
