@@ -1,3 +1,14 @@
+"""
+Application settings
+
+All configuration lives here and is read once when the module is first imported.
+Each setting can be overriden by an enrionment variable with the "FRIDGED_" prefix
+or by a line in .env file.
+
+settings is used in app.db and alembic/env.py
+
+"""
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -5,6 +16,8 @@ class Settings(BaseSettings):
     """App settings. Eeach field can be overriden by an environment variable
     with the FIRDGED_ prefix, or by a line in a local .env file.
     Example: FRIDGED_DATABASE_URL=sqlite:///./other.db
+
+    Values are converted and validated to the fields type so wrong value fails clearly at start.
     """
 
     # extra="ignore": unrelated lines in .env must not crash the app
