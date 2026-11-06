@@ -86,11 +86,24 @@ database path is relative.
 
 ## Layout
 
-```
-app/        the application (main, config, db, models)
-tests/      pytest tests
-alembic/    migrations
-```
+Each Python file starts with a docstring describing its purpose, who uses it
+and its gotchas. Hover over a name in VS Code to read it.
+
+| Path                     | What it is                                                      |
+| ------------------------ | --------------------------------------------------------------- |
+| `pyproject.toml`         | Package name, dependencies, pytest and ruff settings            |
+| `app/__init__.py`        | Marks `app/` as a Python package                                |
+| `app/main.py`            | Creates the FastAPI app and registers the routes                |
+| `app/config.py`          | Settings, read from `FRIDGED_*` environment variables or `.env` |
+| `app/db.py`              | Engine, SQLite settings, and one session per request (`get_db`) |
+| `app/models.py`          | The `products` and `events` tables and their rules              |
+| `alembic.ini`            | Alembic config (generated, rarely edited)                       |
+| `alembic/env.py`         | Connects Alembic to the models and the app's database URL       |
+| `alembic/script.py.mako` | Template for new migration files (generated)                    |
+| `alembic/versions/`      | Migrations, one file per schema change                          |
+| `tests/conftest.py`      | Fixtures: temporary database, session, test client              |
+| `tests/test_health.py`   | Health endpoint test                                            |
+| `tests/test_models.py`   | Tests for the database rules                                    |
 
 ## Troubleshooting
 

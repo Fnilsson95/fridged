@@ -1,3 +1,11 @@
+"""
+Alembic migration environment
+
+Alembic runs this file for every command (upgrade, downgrade, revision, etc)
+It points Alembic at the app database URL and the models metadata.
+"""
+
+
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config, pool
@@ -6,6 +14,7 @@ from alembic import context
 from app.config import settings
 from app.models import Base
 
+# The loaded alembic.ini
 config = context.config
 
 # Use the same database URL as the app, not the one in alembic.ini.
