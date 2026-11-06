@@ -1,3 +1,17 @@
+""" Database tables (SQLAlchemy models)
+
+Defines tables and the rules of the database itself enforces.
+
+Tables:
+    * products - one per barcode, in either the unknown or the known register
+    * events - an append-only log of every recorded scan
+
+Conventions:
+    * Money is integer öre (1250 = 12,50kr), never a float (UI will convert it)
+    * Timestamps are UTC ISO-8601 strings in one fixed format so they sort correctly as text
+    * Stock and totals are not stored, they are computed from "events"
+"""
+
 from datetime import UTC, datetime
 
 from sqlalchemy import CheckConstraint, ForeignKey, Index, MetaData
@@ -55,7 +69,7 @@ class Product(Base):
     barcode: Mapped[str] = mapped_column(unique=True)
     status: Mapped[str] = mapped_column(default="unknown", server_default="unknown")
 
-    # `X | None`means the column is nullable. These are NULL while unknown
+    # These are NULL while unknown
     name: Mapped[str | None]
     brand: Mapped[str | None]
     size_label: Mapped[str | None]  # Example: 500g - 1l
