@@ -1,3 +1,11 @@
+"""
+Tests for the rules the database enforces on the models
+
+Each test adds rows through a session and commits
+Constraints are checked when the SQL is actually sent (commit())
+
+"""
+
 import pytest
 from sqlalchemy.exc import IntegrityError
 

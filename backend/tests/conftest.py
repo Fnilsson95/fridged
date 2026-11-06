@@ -1,3 +1,14 @@
+"""
+Shared pytest fixtures
+pytest loads this file automatically. A test gets a fixture by naming is as a parameter
+I.e. "def test_health(client)"
+
+Fixtures:
+    * engine - a fresh SQLite db in a temporary folder, with all tables
+    * db - a session on that databate, for tests that use the models directly.
+    * client - a "TestClient" whose "get_db" dependency uses that database
+"""
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import sessionmaker
@@ -9,7 +20,9 @@ from app.models import Base
 
 @pytest.fixture
 def engine(tmp_path):
-    """A fresh, empty SQLite database for each test (in pytest's temp folder)."""
+    """A fresh, empty SQLite database for each test (in pytest's temp folder).
+    Creates an empty DB with all tables and closes it afterwards
+    """
     engine = make_engine(f"sqlite:///{tmp_path / 'test.db'}")
     Base.metadata.create_all(engine)  # create the tables straight from the models
     yield engine
