@@ -1,6 +1,7 @@
 """
 
-Scan handling - what one scan from the device does
+Scan handling - what one scan from the device does. Turns one scan from the device into
+a database change and a result. The logic behind POST /api/scans
 
 
 
@@ -11,6 +12,17 @@ Implements the scan rules. Every scan ends in one of six results:
     * new_item - IN scan of a barcode never seen before
     * not_in_stock - OUT scan with no stock. No event is recorded
     * duplicate - a client_event_id already processed
+
+(Scan flow)
+Scan arrives 
+    |
+    |__ already seen? --> duplicate
+    |
+    |__ find/create product
+    |
+    |__ OUT and no stock? --> not_in_stock (no event)
+    |
+    |__ record event, commit --> new_item / stocked / stocktaken / used 
 """
 
 
@@ -115,6 +127,7 @@ def _record_scan(
 
     product = db.scalar(select(Product).where(Product.barcode == barcode))
 
+    # Store true or false, exists or not
     is_new = product is None
     if product is None:
         # Never seen. Create it in the unknown register
