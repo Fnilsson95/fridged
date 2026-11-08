@@ -11,8 +11,7 @@ Conventions:
     * Timestamps are UTC ISO-8601 strings in one fixed format so they sort correctly as text
     * Stock and totals are not stored, they are computed from "events"
 """
-
-from datetime import UTC, datetime
+from app.timeutils import utc_now_iso
 
 from sqlalchemy import CheckConstraint, ForeignKey, Index, MetaData
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -33,14 +32,6 @@ class Base(DeclarativeBase):
     """Parent class of all tables. Alembic reads Base.metadata to see the schema"""
 
     metadata = MetaData(naming_convention=NAMING_CONVENTION)
-
-
-def utc_now_iso() -> str:
-    """Current time as a UTC ISO-8601 string --> 2026-11-01T17:04:00.12+00:00.
-    All timestamps are stored as UTC text (project rule)
-    """
-
-    return datetime.now(UTC).isoformat(timespec="milliseconds")
 
 
 class Product(Base):
