@@ -9,11 +9,12 @@ Creates the "app" object that uvicorn runs and registers the routes.
 
 from fastapi import FastAPI
 
+from app.routers import health, scans
+
 # Application - title appears at the top of docs and openapi.json
 app = FastAPI(title="fridged")
 
+app.include_router(health.router)
+app.include_router(scans.router)
 
-@app.get("/api/health")
-def health() -> dict[str, str]:
-    """Used to check that the backend is running"""
-    return {"status": "ok"}
+
