@@ -14,7 +14,9 @@ So importing this module is fine.
 """
 
 from collections.abc import Iterator
+from typing import Annotated
 
+from fastapi import Depends
 from sqlalchemy import Engine, create_engine, event
 from sqlalchemy.orm import Session, sessionmaker
 
@@ -71,3 +73,8 @@ def get_db() -> Iterator[Session]:
 
     with SessionLocal() as session:
         yield session
+
+
+# Use "db: DbSession" in a route to get a database session
+# It is shorted for "db: Session = Depends(get_db)"
+DbSession = Annotated[Session, Depends(get_db)]
