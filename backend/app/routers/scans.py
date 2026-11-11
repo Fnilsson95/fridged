@@ -18,6 +18,7 @@ from app.timeutils import to_utc_iso
 
 router = APIRouter(prefix="/api", tags=["scans"])
 
+@router.post("/scans")
 def create_scan(scan: ScanRequest, db: DbSession) -> ScanReponse:
     """Record one scan from the device and report what happened"""
 
