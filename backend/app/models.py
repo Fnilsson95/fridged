@@ -11,10 +11,10 @@ Conventions:
     * Timestamps are UTC ISO-8601 strings in one fixed format so they sort correctly as text
     * Stock and totals are not stored, they are computed from "events"
 """
-from app.timeutils import utc_now_iso
-
 from sqlalchemy import CheckConstraint, ForeignKey, Index, MetaData
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+
+from app.timeutils import utc_now_iso
 
 # Naming rules for constraints and indexes. Without names, SQLite constraint are anonymous
 # and Alembic can't change or drop them later

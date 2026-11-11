@@ -1,9 +1,11 @@
 """Tests for barcode normalisation"""
 
 import logging
+
 import pytest
 
 from app.barcodes import has_valid_check_digit, normalize_barcode
+
 
 @pytest.mark.parametrize(
     ("raw", "expected"),

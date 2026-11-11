@@ -4,7 +4,8 @@ from datetime import UTC, datetime, timedelta, timezone
 
 import pytest
 
-from app.timeutils import utc_now_iso, to_utc_iso
+from app.timeutils import to_utc_iso, utc_now_iso
+
 
 def test_to_utc_iso_converts_to_utc():
     """Test if conversion from another timezone to UTC is correct"""

@@ -5,6 +5,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
 
+
 class ProductSummary(BaseModel):
     """The product fields the devide and the website need"""
 

@@ -9,6 +9,7 @@ from app.barcodes import normalize_barcode
 from app.schemas.products import ProductSummary
 from app.services.scans import ScanMode, ScanResult
 
+
 class ScanRequest(BaseModel):
     """One scan, as sent by the device"""
 

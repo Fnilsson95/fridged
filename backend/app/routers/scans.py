@@ -12,7 +12,7 @@ from fastapi import APIRouter
 
 from app.db import DbSession
 from app.schemas.products import ProductSummary
-from app.schemas.scans import ScanRequest, ScanReponse
+from app.schemas.scans import ScanReponse, ScanRequest
 from app.services.scans import process_scan
 from app.timeutils import to_utc_iso
 

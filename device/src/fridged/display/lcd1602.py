@@ -9,7 +9,7 @@ CHIP = "/dev/gpiochip0"
 
 # RS = Register select (0 sends a command, 1 sends character data)
 # E = enable (display latches the data lines when E goes high -> low)
-RS, E = 25, 24 #
+RS, E = 25, 24
 # Data lines
 DATA = (23, 12, 16, 20)  # D4..D7
 

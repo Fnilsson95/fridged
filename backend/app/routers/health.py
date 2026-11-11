@@ -6,7 +6,6 @@ GET /api/health
 
 from fastapi import APIRouter
 
-
 # every path in this router starts with /api
 # tag groups the endpoints under specific heading
 router = APIRouter(prefix="/api", tags=["health"])

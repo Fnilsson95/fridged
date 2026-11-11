@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 
 from app.models import Event
 
+
 def get_stock(db: Session, product_id: int) -> int:
     """Return how many packages of a product are in the fridge
     

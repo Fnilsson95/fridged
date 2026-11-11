@@ -37,7 +37,6 @@ from sqlalchemy.orm import Session
 from app.models import Event, Product
 from app.services.stock import get_stock
 
-
 # Literal --> exactly these specific values
 ScanMode = Literal["in", "out", "stocktake"]
 ScanResult = Literal["stocked", "stocktaken", "used", "new_item", "not_in_stock", "duplicate"]

@@ -7,6 +7,7 @@ These helpers are the only place that format is produced, so all timestamp in th
 
 from datetime import UTC, datetime
 
+
 def to_utc_iso(moment: datetime) -> str:
     """Converts time to the stored UTC text format."""
 
