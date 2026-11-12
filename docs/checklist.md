@@ -41,18 +41,18 @@ Commit style: `feat:`, `fix:`, `test:`, `docs:`, `chore:`. No AI references or c
 
 ## 2. Scans: `POST /api/scans`
 
-- [ ] `app/barcodes.py`: `normalize_barcode()` (digits only, UPC-A to GTIN-13, EAN-8 unchanged, check-digit warning only)
-- [ ] Unit tests for normalization: spaces, 12 digits, 8 digits, bad check digit, non-digits
-- [ ] Pydantic schemas: `ScanRequest` (`barcode`, `mode`, `client_event_id`, `occurred_at`) and `ScanResponse` (`result`, product info, stock)
-- [ ] `app/services/scans.py`: the scan logic, separate from the route so it is easy to test
-- [ ] Stock query: `in` + `stocktake` minus `out`, non-reverted only
-- [ ] Do the stock check and the insert in **one transaction** (so two quick OUT scans cannot both succeed on the last item)
-- [ ] Idempotency: a repeated `client_event_id` returns `duplicate`. Also catch the unique-constraint error for the race where two identical requests arrive together
-- [ ] All results implemented: `stocked`, `stocktaken`, `used`, `new_item`, `not_in_stock`, `duplicate`
-- [ ] Unknown barcode + OUT creates the unknown product but records **no event**
-- [ ] Events store the product's current price as a snapshot (NULL while unknown)
-- [ ] One parametrized test per row of the scan-rules table in `data-model.md`
-- [ ] Extra tests: stock never goes negative, reverted events are ignored, duplicate does not change stock
+- [x] `app/barcodes.py`: `normalize_barcode()` (digits only, UPC-A to GTIN-13, EAN-8 unchanged, check-digit warning only)
+- [x] Unit tests for normalization: spaces, 12 digits, 8 digits, bad check digit, non-digits
+- [x] Pydantic schemas: `ScanRequest` (`barcode`, `mode`, `client_event_id`, `occurred_at`) and `ScanResponse` (`result`, product info, stock)
+- [x] `app/services/scans.py`: the scan logic, separate from the route so it is easy to test
+- [x] Stock query: `in` + `stocktake` minus `out`, non-reverted only
+- [x] Do the stock check and the insert in **one transaction** (so two quick OUT scans cannot both succeed on the last item)
+- [x] Idempotency: a repeated `client_event_id` returns `duplicate`. Also catch the unique-constraint error for the race where two identical requests arrive together
+- [x] All results implemented: `stocked`, `stocktaken`, `used`, `new_item`, `not_in_stock`, `duplicate`
+- [x] Unknown barcode + OUT creates the unknown product but records **no event**
+- [x] Events store the product's current price as a snapshot (NULL while unknown)
+- [x] One parametrized test per row of the scan-rules table in `data-model.md`
+- [x] Extra tests: stock never goes negative, reverted events are ignored, duplicate does not change stock
 
 **Done when:** every row of the scan-rules table has a passing test, and a `curl` scan works against the running server.
 
