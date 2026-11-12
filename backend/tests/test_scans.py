@@ -1,6 +1,6 @@
 """Tests for POST /api/scans.
 
-``test_scan_rules`` has one case per row of the scan-rules table in
+""test_scan_rules"" has one case per row of the scan-rules table in
 docs/data-model.md. The other tests cover duplicates, undo, normalization,
 price snapshots and input validation.
 """
@@ -16,9 +16,6 @@ MILK = "7310865004703"
 SCANNED_AT = "2026-11-06T18:00:00+01:00"  # 17:00 UTC
 
 
-# --- Helpers -----------------------------------------------------------------
-
-
 def scan(client, mode, barcode=MILK, *, client_event_id=None, occurred_at=SCANNED_AT):
     """Send one scan to the API, like the device would."""
     payload = {
@@ -31,7 +28,7 @@ def scan(client, mode, barcode=MILK, *, client_event_id=None, occurred_at=SCANNE
 
 
 def make_product(db, state, stock):
-    """Prepare the database: a product in the given state with `stock` packages.
+    """Prepare the database with a product in the given state with "stock" packages.
 
     state: "never_seen" (no product), "unknown" (barcode only) or "known".
     """
@@ -61,9 +58,6 @@ def make_product(db, state, stock):
 
 def count_events(db):
     return db.scalar(select(func.count()).select_from(Event))
-
-
-# --- The scan-rules table ----------------------------------------------------
 
 
 @pytest.mark.parametrize(
@@ -122,9 +116,6 @@ def test_scan_rules(client, db, state, stock_before, mode, result, event_type, p
         assert count_events(db) == events_before + 1
 
 
-# --- Duplicates and undo -----------------------------------------------------
-
-
 def test_same_scan_twice_is_recorded_once(client, db):
     make_product(db, "known", 0)
     scan_id = str(uuid4())
@@ -158,9 +149,6 @@ def test_stock_never_goes_negative(client, db):
     assert second["stock"] == 0
 
 
-# --- Normalization, prices and time ------------------------------------------
-
-
 def test_upc_a_and_its_gtin_13_form_are_the_same_product(client):
     first = scan(client, "in", barcode="036000291452").json()
     second = scan(client, "out", barcode="0036000291452").json()
@@ -189,9 +177,6 @@ def test_occurred_at_is_stored_in_utc(client, db):
     assert event.occurred_at == "2026-11-06T17:00:00.000+00:00"
 
 
-# --- Invalid input -----------------------------------------------------------
-
-
 @pytest.mark.parametrize(
     "overrides",
     [
@@ -209,9 +194,9 @@ def test_invalid_input_is_rejected(client, db, overrides):
         "mode": "in",
         "client_event_id": str(uuid4()),
         "occurred_at": SCANNED_AT,
-        **overrides,
+        **overrides, # unpacks parametrized dictionary and overrides and replaces one field at a time
     }
     response = client.post("/api/scans", json=payload)
 
-    assert response.status_code == 422
+    assert response.status_code == 422 # Error code - unprocessable content
     assert count_events(db) == 0

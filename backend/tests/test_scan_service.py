@@ -1,6 +1,6 @@
 """Service-level tests for app.services.scans.
 
-These call ``process_scan`` directly with a session, without HTTP. That is
+These call ""process_scan"" directly with a session, without HTTP. That is
 possible because services know nothing about FastAPI.
 """
 
