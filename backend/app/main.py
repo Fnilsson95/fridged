@@ -7,17 +7,18 @@ Creates the "app" object that uvicorn runs and registers the routes.
 
 """
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from app.errors import ConflictError, DomainError, InvalidRequestError, NotFoundError
-from app.routers import health, scans
+from app.routers import health, products, scans
 
 # Application - title appears at the top of docs and openapi.json
 app = FastAPI(title="fridged")
 
 app.include_router(health.router)
 app.include_router(scans.router)
+app.include_router(products.router)
 
 def handle_domain_error(_request: Request, exc: DomainError) -> JSONResponse:
     """Turn an error raised by a service into an HTTP response
