@@ -9,6 +9,8 @@ Fixtures:
     * client - a "TestClient" whose "get_db" dependency uses that database
 """
 
+from uuid import uuid4
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import sessionmaker
@@ -60,8 +62,8 @@ def scan(client):
         payload = {
             "barcode": barcode,
             "mode": mode,
-            "client_event_id": str(uuid64()),
-            "occured_at": occurred_at,
+            "client_event_id": str(uuid4()),
+            "occurred_at": occurred_at,
         }
         response = client.post("/api/scans", json=payload)
         assert response.status_code == 200, response.text
