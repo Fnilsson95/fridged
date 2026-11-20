@@ -9,7 +9,7 @@ from fridged.display.lcd1602 import LCD1602
 lcd = LCD1602()
 
 try:
-    lcd.write("Fridged", 0) # top line (0)
-    lcd.write("Tracker!", 1) # bottom line (1)
+    lcd.write("Fridged", 0)  # top line (0)
+    lcd.write("Tracker!", 1)  # bottom line (1)
 finally:
     lcd.close()

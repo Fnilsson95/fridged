@@ -5,7 +5,6 @@ Alembic runs this file for every command (upgrade, downgrade, revision, etc)
 It points Alembic at the app database URL and the models metadata.
 """
 
-
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config, pool

@@ -1,6 +1,5 @@
 """Request and response shapes for POST /api/scans"""
 
-
 from uuid import UUID
 
 from pydantic import AwareDatetime, BaseModel, Field, field_validator

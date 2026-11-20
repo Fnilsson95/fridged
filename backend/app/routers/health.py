@@ -10,8 +10,8 @@ from fastapi import APIRouter
 # tag groups the endpoints under specific heading
 router = APIRouter(prefix="/api", tags=["health"])
 
+
 @router.get("/health")
 def health() -> dict[str, str]:
     """Report that the backend is running"""
     return {"status": "ok"}
-

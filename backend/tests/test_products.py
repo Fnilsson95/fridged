@@ -114,7 +114,6 @@ def test_registering_requires_name_brand_and_price(client, db, scan, missing):
     assert db.scalar(select(Event.unit_price_ore)) is None  # nothing backfilled
 
 
-
 def test_new_price_only_affects_future_scans(client, db, scan):
     product_id = scan("in", COKE)["product"]["id"]
     register(client, product_id)
@@ -164,7 +163,6 @@ def test_invalid_changes_are_rejected(client, scan, changes):
 
 def test_patch_missing_product_is_404(client):
     assert client.patch("/api/products/999", json=REGISTER_COKE).status_code == 404
-
 
 
 def test_product_without_events_can_be_deleted(client, scan):

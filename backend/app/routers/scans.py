@@ -6,8 +6,6 @@ The device sends every scanned product barcode here.
 Input is validated by ScanRequest and outcome into ScanResponse
 """
 
-
-
 from fastapi import APIRouter
 
 from app.db import DbSession
@@ -17,6 +15,7 @@ from app.services.scans import process_scan
 from app.timeutils import to_utc_iso
 
 router = APIRouter(prefix="/api", tags=["scans"])
+
 
 @router.post("/scans")
 def create_scan(scan: ScanRequest, db: DbSession) -> ScanReponse:
@@ -36,4 +35,3 @@ def create_scan(scan: ScanRequest, db: DbSession) -> ScanReponse:
         stock=outcome.stock,
         product=ProductSummary.model_validate(outcome.product),
     )
-

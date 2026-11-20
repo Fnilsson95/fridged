@@ -15,9 +15,10 @@ def to_utc_iso(moment: datetime) -> str:
         raise ValueError("datetime must be timezone aware")
     return moment.astimezone(UTC).isoformat(timespec="milliseconds")
 
+
 def utc_now_iso() -> str:
     """Return the correct time in the stored UTC text format
-    
+
     Passed to model columns as "default=utc_now_iso" (without parentheses)
     so it runs once for each new row
     """

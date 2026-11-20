@@ -21,8 +21,9 @@ logger = logging.getLogger(__name__)
 # Valid GTIN (Global Trade Item Number) lenghts (EAN-8, UPC-A, EAN-13 and GTIN-14)
 GTIN_LENGTHS = {8, 12, 13, 14}
 
+
 def normalize_barcode(raw: str) -> str:
-    """Return a standard form of a scanned barcode """
+    """Return a standard form of a scanned barcode"""
 
     # Split on any whitespace
     # remove spaces, tabs and newlines anywhere in the string
@@ -46,14 +47,15 @@ def normalize_barcode(raw: str) -> str:
         logger.warning("Barcode %s has an invalid check digit", code)
     return code
 
+
 def has_valid_check_digit(code: str) -> bool:
     """Check the last digit of a GTIN
-    
+
     The check digit lets a scanner detect most misreads
     Going from right to left, multiply by 3 and 1, alternating, and add them up.
     The check digit is the number that brings that sum up to next multiple of 10.
 
-    Example: 
+    Example:
     "7310865004703"" has a weighted sum of 67, where the next multiple of 10 is 70.
     So the check digit must be 3, which it is.
     (7*1 + 3*3 + 1*1 + 0*3 + 8*1 + 6*3 + 5*1 + 0*3 + 0*1 + 4*3 + 7*1 + 0*3 = 67)
@@ -85,4 +87,3 @@ def has_valid_check_digit(code: str) -> bool:
     expected = (10 - total % 10) % 10
 
     return expected == check
-

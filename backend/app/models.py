@@ -1,4 +1,4 @@
-""" Database tables (SQLAlchemy models)
+"""Database tables (SQLAlchemy models)
 
 Defines tables and the rules of the database itself enforces.
 
@@ -11,6 +11,7 @@ Conventions:
     * Timestamps are UTC ISO-8601 strings in one fixed format so they sort correctly as text
     * Stock and totals are not stored, they are computed from "events"
 """
+
 from sqlalchemy import CheckConstraint, ForeignKey, Index, MetaData
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 

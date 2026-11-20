@@ -1,6 +1,5 @@
 """Product endpoints: list, get, edit and delete"""
 
-
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Query, Response, status
@@ -10,6 +9,7 @@ from app.schemas.products import ProductSummary, ProductUpdate, ProductWithStock
 from app.services import products as product_service
 
 router = APIRouter(prefix="/api", tags=["products"])
+
 
 def _to_schema(row: product_service.ProductRow) -> ProductWithStock:
     """Combine the products own fields with its computed numbers"""
@@ -23,6 +23,7 @@ def _to_schema(row: product_service.ProductRow) -> ProductWithStock:
         created_at=row.product.created_at,
         updated_at=row.product.updated_at,
     )
+
 
 @router.get("/products")
 def list_products(
@@ -47,7 +48,6 @@ def update_product(product_id: int, changes: ProductUpdate, db: DbSession) -> Pr
     """Edit a product. For an unkown product, send name, brand and price to register it"""
     row = product_service.update_product(db, product_id, changes.model_dump(exclude_unset=True))
     return _to_schema(row)
-
 
 
 @router.delete("/products/{product_id}")

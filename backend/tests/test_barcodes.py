@@ -20,20 +20,12 @@ from app.barcodes import has_valid_check_digit, normalize_barcode
 def test_noramlize_barcode(raw, expected):
     assert normalize_barcode(raw) == expected
 
-@pytest.mark.parametrize(
-    "raw",
-    [
-        "",
-        "   ",
-        "73108650047O3",
-        "abc",
-        "7310-865004703",
-        "²"
-    ]
-)
+
+@pytest.mark.parametrize("raw", ["", "   ", "73108650047O3", "abc", "7310-865004703", "²"])
 def test_normalize_barcode_rejects_non_digits(raw):
     with pytest.raises(ValueError):
         normalize_barcode(raw)
+
 
 def test_invalid_check_digit_is_accepted_with_a_warning(caplog):
     """A misread must not lose the scan, but should be visible in the logs"""
@@ -49,7 +41,7 @@ def test_unusual_length_is_accepted_with_a_warning(caplog):
     with caplog.at_level(logging.WARNING):
         assert normalize_barcode("12345") == "12345"
     assert "unusual length" in caplog.text
-    
+
 
 @pytest.mark.parametrize(
     ("code", "valid"),

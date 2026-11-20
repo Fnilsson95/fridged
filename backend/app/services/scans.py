@@ -14,7 +14,7 @@ Implements the scan rules. Every scan ends in one of six results:
     * duplicate - a client_event_id already processed
 
 (Scan flow)
-Scan arrives 
+Scan arrives
     |
     |__ already seen? --> duplicate
     |
@@ -22,10 +22,8 @@ Scan arrives
     |
     |__ OUT and no stock? --> not_in_stock (no event)
     |
-    |__ record event, commit --> new_item / stocked / stocktaken / used 
+    |__ record event, commit --> new_item / stocked / stocktaken / used
 """
-
-
 
 from dataclasses import dataclass
 from typing import Literal
@@ -45,8 +43,8 @@ ScanResult = Literal["stocked", "stocktaken", "used", "new_item", "not_in_stock"
 @dataclass(frozen=True)
 class ScanOutcome:
     """What happened to one scan. The router turns this into the JSON response
-    
-    
+
+
     Attributes:
         * result - one of the six scans
         * product - the product the barcode belongs to
@@ -61,16 +59,14 @@ class ScanOutcome:
 
 
 def process_scan(
-        db: Session,
-        *, 
-        barcode: str,
-        mode: ScanMode,
-        client_event_id: str,
-        occurred_at: str,
+    db: Session,
+    *,
+    barcode: str,
+    mode: ScanMode,
+    client_event_id: str,
+    occurred_at: str,
 ) -> ScanOutcome:
-
     """Apply one scan and commit it"""
-
 
     # Seen this scan before. Then record nothing
     duplicate = _find_duplicate(db, client_event_id)
@@ -87,7 +83,6 @@ def process_scan(
         )
         db.commit()
     except IntegrityError:
-
         # The same scan arrived twice at the same time (a retry while first still running)
         # Rollback this request and undo
         db.rollback()
@@ -97,7 +92,6 @@ def process_scan(
             raise
         return duplicate
     return outcome
-
 
 
 def _find_duplicate(db: Session, client_event_id: str) -> ScanOutcome | None:
@@ -115,12 +109,7 @@ def _find_duplicate(db: Session, client_event_id: str) -> ScanOutcome | None:
 
 
 def _record_scan(
-        db: Session,
-        *, 
-        barcode: str,
-        mode: ScanMode,
-        client_event_id: str,
-        occurred_at: str
+    db: Session, *, barcode: str, mode: ScanMode, client_event_id: str, occurred_at: str
 ) -> ScanOutcome:
     """Find or create the product and record the event. Does not commit"""
 
@@ -132,7 +121,7 @@ def _record_scan(
         # Never seen. Create it in the unknown register
         product = Product(barcode=barcode)
         db.add(product)
-        db.flush() # Send the INSERT now (still uncommited) so product.id is set
+        db.flush()  # Send the INSERT now (still uncommited) so product.id is set
 
     if mode == "out":
         stock = get_stock(db, product.id)
@@ -148,7 +137,7 @@ def _record_scan(
         occurred_at=occurred_at,
     )
     db.add(event)
-    db.flush() # set event.id and make the event count in the stock query below
+    db.flush()  # set event.id and make the event count in the stock query below
 
     return ScanOutcome(
         result=_result_for(mode, is_new=is_new),
@@ -164,5 +153,3 @@ def _result_for(mode: ScanMode, *, is_new: bool) -> ScanResult:
     if is_new:
         return "new_item"
     return {"in": "stocked", "stocktake": "stocktaken", "out": "used"}[mode]
-
-

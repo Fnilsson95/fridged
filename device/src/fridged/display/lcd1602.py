@@ -1,4 +1,5 @@
 """Minimal HD44780 (LCD1602) driver, 4-bit mode, write-only, via libgpiod v2."""
+
 import time
 
 import gpiod
@@ -15,11 +16,11 @@ DATA = (23, 12, 16, 20)  # D4..D7
 
 
 class LCD1602:
-    """ A 16x2 LCD on the GPIO pins above. Call close() when done"""
+    """A 16x2 LCD on the GPIO pins above. Call close() when done"""
 
     def __init__(self) -> None:
         pins = (RS, E, *DATA)
-        # Claim all six pins as output, starting long. 
+        # Claim all six pins as output, starting long.
         self._req = gpiod.request_lines(
             CHIP,
             consumer="fridged-lcd",

@@ -13,7 +13,7 @@ from app.models import Event
 
 def get_stock(db: Session, product_id: int) -> int:
     """Return how many packages of a product are in the fridge
-    
+
     Count every scan for the product in/out
     Undone events (reverted) are skipped and coalesce turn NULL into 0
     """

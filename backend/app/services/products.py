@@ -1,6 +1,5 @@
 """Product rules - listing, editing, registering unknown items and deleting"""
 
-
 from dataclasses import dataclass
 from typing import Any, Literal
 
@@ -34,14 +33,13 @@ class ProductRow:
 
 def _event_stats():
     """Subquery for one row per product with stock, scan count and last scan
-    
+
     SELECT product_id,
                sum(CASE WHEN reverted THEN 0 WHEN type = 'out' THEN -1 ELSE 1 END),
                sum(CASE WHEN reverted THEN 0 ELSE 1 END),
                max(CASE WHEN reverted THEN NULL ELSE occurred_at END)
         FROM events GROUP BY product_id
     """
-
 
     counts = Event.reverted_at.is_(None)
     return (
@@ -56,9 +54,9 @@ def _event_stats():
         .subquery()
     )
 
+
 def _products_query() -> Select:
     """SELECT products with their stats. Products without event get 0"""
-
 
     stats = _event_stats()
     return select(
@@ -68,11 +66,13 @@ def _products_query() -> Select:
         stats.c.last_scanned_at,
     ).outerjoin(stats, stats.c.product_id == Product.id)
 
+
 def _to_rows(result) -> list[ProductRow]:
     return [
         ProductRow(product=p, stock=stock, scan_count=count, last_scanned_at=last)
         for p, stock, count, last in result
     ]
+
 
 def list_products(
     db: Session,
@@ -121,10 +121,9 @@ def get_product(db: Session, product_id: int) -> ProductRow:
 
 def update_product(db: Session, product_id: int, changes: dict[str, Any]) -> ProductRow:
     """Apply changes to a product and commit
-    
+
     An unknown product becomes known when we add name, brand and a price.
     """
-
 
     product = db.get(Product, product_id)
     if product is None:
@@ -142,7 +141,8 @@ def update_product(db: Session, product_id: int, changes: dict[str, Any]) -> Pro
     if product.status == "unknown":
         product.status = "known"
         db.execute(
-            update(Event).where(
+            update(Event)
+            .where(
                 Event.product_id == product_id,
                 Event.unit_price_ore.is_(None),
                 Event.type.in_(("in", "out")),
@@ -153,13 +153,12 @@ def update_product(db: Session, product_id: int, changes: dict[str, Any]) -> Pro
     db.commit()
     return get_product(db, product_id)
 
+
 def delete_product(db: Session, product_id: int) -> None:
     """Delete a product that was added by mistake
-    
+
     Only allowed when the product has no events at all, including undone ones as events are never deleted.
     """
-
-
 
     product = db.get(Product, product_id)
 
@@ -168,10 +167,7 @@ def delete_product(db: Session, product_id: int) -> None:
 
     has_events = db.scalar(select(exists().where(Event.product_id == product_id)))
     if has_events:
-        raise ConflictError(
-            f"Product {product_id} has scans and can't be deleted. Edit it instead"
-        )
+        raise ConflictError(f"Product {product_id} has scans and can't be deleted. Edit it instead")
 
     db.delete(product)
     db.commit()
-

@@ -7,7 +7,7 @@ Creates the SQLAlchemy engine (home base/gateway to the database)
 
 Used by "Routes" (via get_db), tests (to create their own temporary database)'
 
-SQLite ignores FKs unless PRAGMA foreign_keys=ON. 
+SQLite ignores FKs unless PRAGMA foreign_keys=ON.
 Creating the engine does not open the database. The file is created on the first real connection
 So importing this module is fine.
 
@@ -26,7 +26,7 @@ from app.config import settings
 def make_engine(url: str) -> Engine:
     """Create a database engine. Tests call this with their own temporary database
     An enfine is a long-lived object for one database, it knows the URL and keeps a pool of connections
-    that sessions borrow. 
+    that sessions borrow.
 
     No connection is opened until it is first used
     """
@@ -41,7 +41,7 @@ def make_engine(url: str) -> Engine:
 
         @event.listens_for(engine, "connect")
         def _set_sqlite_pragmas(dbapi_connection, _record) -> None:
-            """ Apply SQLite settings to a newly created connection
+            """Apply SQLite settings to a newly created connection
 
             Runs once per new raw connection (not each time one is borrowed from the pool).
             foreign_keys and busy_timeout belong to the connection, so they must be set every time

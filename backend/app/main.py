@@ -20,14 +20,14 @@ app.include_router(health.router)
 app.include_router(scans.router)
 app.include_router(products.router)
 
+
 @app.exception_handler(DomainError)
 def handle_domain_error(_request: Request, exc: DomainError) -> JSONResponse:
     """Turn an error raised by a service into an HTTP response
-    
-    FastAPI calls this for DomainError and every subclass of it. 
+
+    FastAPI calls this for DomainError and every subclass of it.
     Body is same shape as FastAPIs own errors
     """
-
 
     if isinstance(exc, NotFoundError):
         status_code = 404
