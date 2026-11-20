@@ -50,3 +50,21 @@ def client(engine):
     with TestClient(app) as test_client:
         yield test_client
     app.dependency_overrides.clear()  # always restore after the test
+
+
+@pytest.fixture
+def scan(client):
+    """Return a function that sends one scan to the API, like the device would"""
+
+    def _scan(mode, barcode, *, occurred_at="2026-11-06T18:00:00+01:00"):
+        payload = {
+            "barcode": barcode,
+            "mode": mode,
+            "client_event_id": str(uuid64()),
+            "occured_at": occurred_at,
+        }
+        response = client.post("/api/scans", json=payload)
+        assert response.status_code == 200, response.text
+        return response.json()
+
+    return _scan
