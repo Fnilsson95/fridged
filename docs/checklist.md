@@ -60,12 +60,12 @@ Commit style: `feat:`, `fix:`, `test:`, `docs:`, `chore:`. No AI references or c
 
 ## 3. Read and edit endpoints
 
-- [ ] `GET /api/products` with filters `status`, `search`, `in_stock`; returns `stock`, `value_ore`, scan count, first-seen
-- [ ] `GET /api/products/{id}`
-- [ ] `PATCH /api/products/{id}`
-  - [ ] Handling an unknown item requires name, brand, price (422 otherwise)
-  - [ ] One transaction: set fields, `status='known'`, backfill `unit_price_ore` on `in`/`out` events where it is NULL
-  - [ ] Editing a known product's price changes only future events
+- [x] `GET /api/products` with filters `status`, `search`, `in_stock`; returns `stock`, `value_ore`, scan count, first-seen
+- [x] `GET /api/products/{id}`
+- [x] `PATCH /api/products/{id}`
+  - [x] Handling an unknown item requires name, brand, price (422 otherwise)
+  - [x] One transaction: set fields, `status='known'`, backfill `unit_price_ore` on `in`/`out` events where it is NULL
+  - [x] Editing a known product's price changes only future events
 - [ ] `GET /api/events` with filters `type`, `product_id` and cursor pagination
 - [ ] `POST /api/events/{id}/revert` (sets `reverted_at`; refuses if the revert would make stock negative, or decide the rule and document it)
 - [ ] `GET /api/summary?period=week|month`: spent, used, gap, change vs previous period
