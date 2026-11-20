@@ -20,6 +20,7 @@ app.include_router(health.router)
 app.include_router(scans.router)
 app.include_router(products.router)
 
+@app.exception_handler(DomainError)
 def handle_domain_error(_request: Request, exc: DomainError) -> JSONResponse:
     """Turn an error raised by a service into an HTTP response
     
