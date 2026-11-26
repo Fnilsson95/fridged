@@ -90,8 +90,6 @@ GPIO is 3.3 V only. Pin map (BCM numbering):
 
 Use `libgpiod` rather than pigpio (pigpio does not support the Pi 5). Check the libgpiod major version first, since the v1 and v2 APIs differ, and confirm the chip with `gpiodetect`. The code is intended to stay portable to a Pi 4/5 later.
 
-The full project spec is the source of truth; export it to `docs/spec.md`.
-
 ## Getting started
 
 Nothing is runnable yet. Planned dev setup:
