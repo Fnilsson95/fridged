@@ -25,7 +25,7 @@ from app.config import settings
 
 def make_engine(url: str) -> Engine:
     """Create a database engine. Tests call this with their own temporary database
-    An enfine is a long-lived object for one database, it knows the URL and keeps a pool of connections
+    An enfine is a longlived object for one DB, it knows the URL and keeps a pool of connections
     that sessions borrow.
 
     No connection is opened until it is first used

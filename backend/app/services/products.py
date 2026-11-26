@@ -9,7 +9,6 @@ from sqlalchemy.orm import Session
 from app.errors import ConflictError, InvalidRequestError, NotFoundError
 from app.models import Event, Product
 
-
 # A know product must have these
 REQUIRED_FOR_KNOWN = ("name", "brand", "current_price_ore")
 
@@ -157,7 +156,7 @@ def update_product(db: Session, product_id: int, changes: dict[str, Any]) -> Pro
 def delete_product(db: Session, product_id: int) -> None:
     """Delete a product that was added by mistake
 
-    Only allowed when the product has no events at all, including undone ones as events are never deleted.
+    Only allowed when the product has no events, include undone ones as events are never deleted.
     """
 
     product = db.get(Product, product_id)

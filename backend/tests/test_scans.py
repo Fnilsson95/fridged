@@ -194,7 +194,7 @@ def test_invalid_input_is_rejected(client, db, overrides):
         "mode": "in",
         "client_event_id": str(uuid4()),
         "occurred_at": SCANNED_AT,
-        **overrides,  # unpacks parametrized dictionary and overrides and replaces one field at a time
+        **overrides,  # unpacks parametrized dicts and overrides and replaces one field at a time
     }
     response = client.post("/api/scans", json=payload)
 

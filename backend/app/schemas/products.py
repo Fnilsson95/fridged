@@ -1,9 +1,8 @@
 """Product shapes used in API responses"""
 
-from typing import Literal, Annotated
+from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
-
 
 Text = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=200)]
 Url = Annotated[str, StringConstraints(strip_whitespace=True, max_length=500)]

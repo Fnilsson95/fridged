@@ -1,8 +1,8 @@
 """
 Time helpers
 
-Every timestamp is stored as UTC ISO-8601 text in one fixed format (Example: 2026-11-08T14:07:00.000Z)
-These helpers are the only place that format is produced, so all timestamp in the DB sorts correctly as text
+Every timestamp is stored as UTC ISO-8601 text in one fixed format (I.e. 2026-11-08T14:07:00.000Z)
+Helpers are the only place that format is produced, so all timestamp in the DB sort correctly
 """
 
 from datetime import UTC, datetime
