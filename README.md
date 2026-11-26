@@ -112,4 +112,4 @@ The frontend is built on a normal PC, not on the Pi (1 GB RAM). The backend serv
 
 ## License
 
-To be decided.
+Released under the [MIT License](LICENSE).
