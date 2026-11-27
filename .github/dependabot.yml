@@ -1,5 +1,6 @@
 # Dependabot opens PRs when a dependency has a new version.
 # CI runs on each PR
+version: 2
 updates:
   # Python packages in backend/uv.lock
   - package-ecosystem: uv
