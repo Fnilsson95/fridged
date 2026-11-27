@@ -11,9 +11,8 @@ the device only talk to this API.
 
 ```bash
 cd backend
-python3 -m venv .venv
+uv sync # creates .venv and installs the exact locked versions
 source .venv/bin/activate
-pip install -e ".[dev]"
 alembic upgrade head          # creates fridged.db with the tables
 ```
 

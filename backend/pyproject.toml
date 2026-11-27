@@ -22,8 +22,9 @@ dependencies = [
     "pydantic-settings",  # reads settings from environment variables
 ]
 
-# Only needed while developing. Install with: pip install -e ".[dev]"
-[project.optional-dependencies]
+# Only needed while developing. "uv sync" installs these by default
+# "uv sync --no-dev" skips them (used on the Pi)
+[dependency-groups]
 dev = [
     "pytest",  # test runner
     "pytest-cov", # measures which lines the tests run
