@@ -10,6 +10,7 @@ updates:
     groups:
       # Collect all minor and patch updates into one PR per week
       python-minor-patch:
+        patterns: ["*"]
         update-types: [minor, patch]
 
   # Actions used in .github/workflows (checkout, setup-uv, ...)
