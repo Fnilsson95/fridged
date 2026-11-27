@@ -26,6 +26,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "pytest",  # test runner
+    "pytest-cov", # measures which lines the tests run
     "httpx",   # required by FastAPI's TestClient
     "ruff",    # linter and formatter
 ]
@@ -45,3 +46,12 @@ extend-exclude = ["alembic/versions"]
 [tool.ruff.lint]
 # E/F: errors and unused code, I: import order, UP: modern Python, B: likely bugs
 select = ["E", "F", "I", "UP", "B"]
+
+[tool.coverage.run]
+source = ["app"] # measaure our code, not the tests or installed libraries
+branch = true # check both sides of each if/else
+
+[tool.coverage.report]
+fail_under = 95 # fail if total coverage below 95%
+show_missing = true # list the line numbers that were never run
+skip_covered = true # hide files at 100%

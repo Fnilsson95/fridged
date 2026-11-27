@@ -44,7 +44,7 @@ jobs:
         run: ruff format --check .
 
       - name: Test
-        run: pytest -q
+        run: pytest -q --cov
 
       - name: Migrations match models
         run: |
