@@ -2,12 +2,13 @@ name: CI
 
 on:
   push:
-    branches: [main]
-  pull_request:
+    branches: [main] # every push to main
+  pull_request: # Runs on PR (for dependabot)
 
 permissions:
   contents: read
 
+# Cancel older one if new one comes in
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -26,12 +27,14 @@ jobs:
         working-directory: backend
 
     steps:
-      - uses: actions/checkout@v7
+      - name: Checkout
+        uses: actions/checkout@v7 # run the code at tag v7
 
-      - uses: astral-sh/setup-uv@v7
+      - name: Setup up uv and python
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
-          enable-cache: true
+          enable-cache: true # keyed on uv.lock
 
       - name: Install
         run: uv sync --locked
